@@ -1,4 +1,4 @@
-package pkg
+package userinterface
 
 import (
 	ui "github.com/gizak/termui/v3"
@@ -14,4 +14,9 @@ func NewProgressGraph() *widgets.Gauge {
 	g2.LabelStyle = ui.NewStyle(ui.ColorBlue)
 	g2.BorderStyle.Fg = ui.ColorWhite
 	return g2
+}
+
+// UpdateGraph updates the graph
+func UpdateGraph(graph *widgets.Gauge, percent int) {
+	graph.Percent = percent % 101
 }

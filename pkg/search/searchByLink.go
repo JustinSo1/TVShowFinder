@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/JustinSo1/TVShowFinder/internal"
+	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 )
 
 const searchByLinkURL = "https://trace.moe/api/search?url="
@@ -32,7 +33,7 @@ func ByLink(link string) string {
 	res = "Title Romaji: " + animeResp.Docs[0].TitleRomanji + "\n" +
 		"Title English: " + animeResp.Docs[0].TitleEnglish + "\n" +
 		"Similarity: " + strconv.FormatFloat(animeResp.Docs[0].Similarity, 'f', 6, 64) + "\n" +
-		"Episode Number: " + IntArrToString(animeResp.Docs[0].Episode) + "\n" +
+		"Episode Number: " + convert.IntArrToString(animeResp.Docs[0].Episode) + "\n" +
 		"Year & Season: " + animeResp.Docs[0].Season + "\n" +
 		"Is Adult: " + strconv.FormatBool(animeResp.Docs[0].IsAdult) + "\n"
 	return res

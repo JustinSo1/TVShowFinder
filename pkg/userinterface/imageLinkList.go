@@ -1,15 +1,16 @@
-package pkg
+package userinterface
 
 import (
+	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
 )
 
 // NewImageLinkList returns list of links
-func NewImageLinkList(data []byte) *widgets.List {
+func NewImageLinkList(file []byte) *widgets.List {
 	l := widgets.NewList()
 	l.Title = "List"
-	l.Rows = ReformatFile(data)
+	l.Rows = convert.FileToNumberedList(file)
 	l.TextStyle = ui.NewStyle(ui.ColorBlue)
 	l.WrapText = true
 	return l

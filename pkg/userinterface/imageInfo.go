@@ -1,4 +1,4 @@
-package pkg
+package userinterface
 
 import (
 	"github.com/JustinSo1/TVShowFinder/pkg/search"

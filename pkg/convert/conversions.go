@@ -1,4 +1,4 @@
-package pkg
+package convert
 
 import (
 	"regexp"
@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// ReformatFile removes carriage returns
-func ReformatFile(s []byte) []string {
+// FileToNumberedList returns a numbered list
+func FileToNumberedList(s []byte) []string {
 	var listElements []string
 	lines := removeCarriageReturns(s)
 	listElements = strings.Split(lines, "\n")
@@ -21,4 +21,13 @@ func removeCarriageReturns(s []byte) string {
 	re := regexp.MustCompile(`\r?`)
 	lines := re.ReplaceAllString(string(s), "")
 	return lines
+}
+
+// IntArrToString converts int array to string
+func IntArrToString(arr []int) string {
+	b := make([]string, len(arr))
+	for i, v := range arr {
+		b[i] = strconv.Itoa(v)
+	}
+	return strings.Join(b, ",")
 }

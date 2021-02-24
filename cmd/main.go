@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/JustinSo1/TVShowFinder/internal"
-	"github.com/JustinSo1/TVShowFinder/pkg"
+	"github.com/JustinSo1/TVShowFinder/pkg/userinterface"
 	ui "github.com/gizak/termui/v3"
 )
 
@@ -26,21 +26,9 @@ func main() {
 	}
 	defer ui.Close()
 
-	l := pkg.NewImageLinkList(data)
+	grid := userinterface.NewTerminalWindow(data)
 
-	g2 := pkg.NewProgressGraph()
-
-	p2 := pkg.NewImageInfo()
-
-	draw := func(count int) {
-		g2.Percent = count % 101
-	}
-
-	grid := pkg.NewTerminalWindow(l, p2, g2)
 	ui.Render(grid)
-
-	lines := pkg.ReformatFile(data)
-	pkg.UpdateText(p2, lines)
 
 	tickerCount := 1
 	uiEvents := ui.PollEvents()
@@ -61,7 +49,6 @@ func main() {
 			if tickerCount == 100 {
 				return
 			}
-			draw(tickerCount)
 			ui.Render(grid)
 			tickerCount++
 		}
