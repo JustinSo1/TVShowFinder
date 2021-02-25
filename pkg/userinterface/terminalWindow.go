@@ -12,7 +12,7 @@ func NewTerminalWindow(file []byte) *ui.Grid {
 
 	g2 := NewProgressGraph()
 
-	p2 := NewImageInfo()
+	p2 := NewImageInfo("Image Info", "Blah blah blah\nText")
 
 	grid := ui.NewGrid()
 	termWidth, termHeight := ui.TerminalDimensions()
