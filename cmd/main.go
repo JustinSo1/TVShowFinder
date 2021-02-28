@@ -26,9 +26,9 @@ func main() {
 	}
 	defer ui.Close()
 
-	grid := userinterface.NewTerminalWindow(data)
+	window := userinterface.NewTerminalWindow(data)
 
-	ui.Render(grid)
+	ui.Render(window.Grid())
 
 	tickerCount := 1
 	uiEvents := ui.PollEvents()
@@ -41,15 +41,16 @@ func main() {
 				return
 			case "<Resize>":
 				payload := e.Payload.(ui.Resize)
-				grid.SetRect(0, 0, payload.Width, payload.Height)
+				window.Grid().SetRect(0, 0, payload.Width, payload.Height)
 				ui.Clear()
-				ui.Render(grid)
+				ui.Render(window.Grid())
 			}
 		case <-ticker:
 			if tickerCount == 100 {
 				return
 			}
-			ui.Render(grid)
+			window.UpdatePercent(tickerCount)
+			ui.Render(window.Grid())
 			tickerCount++
 		}
 	}

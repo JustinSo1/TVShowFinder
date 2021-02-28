@@ -5,18 +5,23 @@ import (
 	"github.com/gizak/termui/v3/widgets"
 )
 
-// NewProgressGraph returns progress graph of searching
-func NewProgressGraph() *widgets.Gauge {
-	g2 := widgets.NewGauge()
-	g2.Title = "Slim Gauge"
-	g2.Percent = 0
-	g2.BarColor = ui.ColorYellow
-	g2.LabelStyle = ui.NewStyle(ui.ColorBlue)
-	g2.BorderStyle.Fg = ui.ColorWhite
-	return g2
+// ProgressGraph is loading graph of searching of image
+type ProgressGraph struct {
+	*widgets.Gauge
 }
 
-// UpdateGraph updates the graph
-func UpdateGraph(graph *widgets.Gauge, percent int) {
-	graph.Percent = percent % 101
+// SetPercent updates the percentage
+func (graph *ProgressGraph) SetPercent(percent int) {
+	graph.Percent = percent
+}
+
+// NewProgressGraph returns progress graph of searching
+func NewProgressGraph() *ProgressGraph {
+	graph := &ProgressGraph{widgets.NewGauge()}
+	graph.Title = "Slim Gauge"
+	graph.Percent = 0
+	graph.BarColor = ui.ColorYellow
+	graph.LabelStyle = ui.NewStyle(ui.ColorBlue)
+	graph.BorderStyle.Fg = ui.ColorWhite
+	return graph
 }
