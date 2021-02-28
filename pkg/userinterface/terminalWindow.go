@@ -1,6 +1,8 @@
 package userinterface
 
 import (
+	"github.com/JustinSo1/TVShowFinder/pkg/convert"
+	"github.com/JustinSo1/TVShowFinder/pkg/search"
 	ui "github.com/gizak/termui/v3"
 )
 
@@ -17,9 +19,14 @@ func (term *TerminalWindow) UpdatePercent(percent int) {
 	term.graph.SetPercent(percent % 101)
 }
 
-// Grid updates the window
+// Grid returns grid
 func (term *TerminalWindow) Grid() *ui.Grid {
 	return term.grid
+}
+
+// Info returns search results
+func (term *TerminalWindow) Info() *ImageInfo {
+	return term.info
 }
 
 // NewTerminalWindow creates a new terminal window
@@ -27,11 +34,18 @@ func NewTerminalWindow(file []byte) *TerminalWindow {
 	window := &TerminalWindow{
 		grid:  ui.NewGrid(),
 		list:  NewImageLinkList(file),
-		info:  NewImageInfo("Image Info", "bLAH BLAH BLAH\nText"),
+		info:  NewImageInfo("Image Info", ""),
 		graph: NewProgressGraph(),
 	}
 
-	// grid := ui.NewGrid()
+	for _, link := range convert.FileToList(file) {
+		go func(link string) {
+			if search.IsURL(link) {
+				window.info.Text += search.ByLink(link)
+			}
+		}(link)
+	}
+
 	termWidth, termHeight := ui.TerminalDimensions()
 	window.grid.SetRect(0, 0, termWidth, termHeight)
 	window.grid.Set(

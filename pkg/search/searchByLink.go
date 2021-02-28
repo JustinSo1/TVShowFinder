@@ -3,13 +3,25 @@ package search
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 
 	"github.com/JustinSo1/TVShowFinder/internal"
-	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 )
+
+// JSONResponse json struct
+type JSONResponse struct {
+	Docs []struct {
+		TitleRomanji string      `json:"title_romaji"`
+		TitleEnglish string      `json:"title_english"`
+		Similarity   float64     `json:"similarity"`
+		Episode      interface{} `json:"episode"` // Can be int or array of ints
+		Season       string      `json:"season"`
+		IsAdult      bool        `json:"is_adult"`
+	} `json:"docs"`
+}
 
 const searchByLinkURL = "https://trace.moe/api/search?url="
 
@@ -26,15 +38,15 @@ func ByLink(link string) string {
 	body, err := ioutil.ReadAll(resp.Body)
 	internal.HandleError(err)
 
-	var animeResp internal.JsonResponse
+	var animeResp JSONResponse
 	json.Unmarshal(body, &animeResp)
 
-	var res string
-	res = "Title Romaji: " + animeResp.Docs[0].TitleRomanji + "\n" +
+	res := "Link: " + link + "\n" +
+		"Title Romaji: " + animeResp.Docs[0].TitleRomanji + "\n" +
 		"Title English: " + animeResp.Docs[0].TitleEnglish + "\n" +
 		"Similarity: " + strconv.FormatFloat(animeResp.Docs[0].Similarity, 'f', 6, 64) + "\n" +
-		"Episode Number: " + convert.IntArrToString(animeResp.Docs[0].Episode) + "\n" +
+		"Episode Number: " + fmt.Sprintf("%v", animeResp.Docs[0].Episode) + "\n" +
 		"Year & Season: " + animeResp.Docs[0].Season + "\n" +
-		"Is Adult: " + strconv.FormatBool(animeResp.Docs[0].IsAdult) + "\n"
+		"Is Adult: " + strconv.FormatBool(animeResp.Docs[0].IsAdult) + "\n\n"
 	return res
 }
