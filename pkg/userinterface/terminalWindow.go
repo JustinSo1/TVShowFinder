@@ -48,13 +48,15 @@ func (term *TerminalWindow) Display(file []byte) {
 			term.info.SetText(term.info.Text + search.ByLink(link))
 		}
 		term.graph.SetPercent(term.graph.Percent + int(delta))
+		ui.Render(term.grid)
 	}
 	term.graph.SetPercent(100)
+	ui.Render(term.grid)
 }
 
 // NewTerminalWindow creates a new terminal window
 func NewTerminalWindow(file []byte) *TerminalWindow {
-	// defer elapsed("page")() // deferred call's arguments are evaulated immediately but execution is delayed
+	// defer elapsed("page")() // deferred call's arguments are evaluated immediately but execution is delayed
 
 	window := &TerminalWindow{
 		grid:  ui.NewGrid(),

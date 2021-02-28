@@ -3,9 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
-	"time"
 
 	"github.com/JustinSo1/TVShowFinder/internal"
 	"github.com/JustinSo1/TVShowFinder/pkg/userinterface"
@@ -21,9 +19,8 @@ func main() {
 	data, err := ioutil.ReadFile(os.Args[1])
 	internal.HandleError(err)
 
-	if err := ui.Init(); err != nil {
-		log.Fatalf("failed to initialize termui: %v", err)
-	}
+	err = ui.Init()
+	internal.HandleError(err)
 	defer ui.Close()
 
 	window := userinterface.NewTerminalWindow(data)
@@ -32,9 +29,7 @@ func main() {
 
 	window.Display(data)
 
-	tickerCount := 1
 	uiEvents := ui.PollEvents()
-	ticker := time.NewTicker(time.Second).C
 	for {
 		select {
 		case e := <-uiEvents:
@@ -47,12 +42,6 @@ func main() {
 				ui.Clear()
 				ui.Render(window.Grid())
 			}
-		case <-ticker:
-			if tickerCount == 100 {
-				return
-			}
-			ui.Render(window.Grid())
-			tickerCount++
 		}
 	}
 }
