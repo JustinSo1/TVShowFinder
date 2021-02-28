@@ -18,7 +18,7 @@ func (graph *ProgressGraph) SetPercent(percent int) {
 // NewProgressGraph returns progress graph of searching
 func NewProgressGraph() *ProgressGraph {
 	graph := &ProgressGraph{widgets.NewGauge()}
-	graph.Title = "Slim Gauge"
+	graph.Title = "Progress Indicator"
 	graph.Percent = 0
 	graph.BarColor = ui.ColorYellow
 	graph.LabelStyle = ui.NewStyle(ui.ColorBlue)

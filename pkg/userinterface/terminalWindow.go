@@ -1,6 +1,9 @@
 package userinterface
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 	"github.com/JustinSo1/TVShowFinder/pkg/search"
 	ui "github.com/gizak/termui/v3"
@@ -29,21 +32,35 @@ func (term *TerminalWindow) Info() *ImageInfo {
 	return term.info
 }
 
+func elapsed(what string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s took %v\n", what, time.Since(start))
+	}
+}
+
+// Display displays JSON response
+func (term *TerminalWindow) Display(file []byte) {
+	fileList := convert.FileToList(file)
+	delta := 100 / len(fileList)
+	for _, link := range fileList {
+		if search.IsURL(link) {
+			term.info.SetText(term.info.Text + search.ByLink(link))
+		}
+		term.graph.SetPercent(term.graph.Percent + int(delta))
+	}
+	term.graph.SetPercent(100)
+}
+
 // NewTerminalWindow creates a new terminal window
 func NewTerminalWindow(file []byte) *TerminalWindow {
+	// defer elapsed("page")() // deferred call's arguments are evaulated immediately but execution is delayed
+
 	window := &TerminalWindow{
 		grid:  ui.NewGrid(),
 		list:  NewImageLinkList(file),
 		info:  NewImageInfo("Image Info", ""),
 		graph: NewProgressGraph(),
-	}
-
-	for _, link := range convert.FileToList(file) {
-		go func(link string) {
-			if search.IsURL(link) {
-				window.info.Text += search.ByLink(link)
-			}
-		}(link)
 	}
 
 	termWidth, termHeight := ui.TerminalDimensions()

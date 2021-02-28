@@ -32,12 +32,3 @@ func NewImageInfo(title, text string) *ImageInfo {
 	info.SetText(text)
 	return info
 }
-
-// // UpdateText updates text of paragraph
-// func UpdateText(p2 *widgets.Paragraph, lines []string) {
-// 	for _, link := range lines {
-// 		if search.IsURL(link) {
-// 			p2.Text += search.ByLink(link)
-// 		}
-// 	}
-// }

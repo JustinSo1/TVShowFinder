@@ -30,6 +30,8 @@ func main() {
 
 	ui.Render(window.Grid())
 
+	window.Display(data)
+
 	tickerCount := 1
 	uiEvents := ui.PollEvents()
 	ticker := time.NewTicker(time.Second).C
@@ -49,7 +51,6 @@ func main() {
 			if tickerCount == 100 {
 				return
 			}
-			window.UpdatePercent(tickerCount)
 			ui.Render(window.Grid())
 			tickerCount++
 		}
