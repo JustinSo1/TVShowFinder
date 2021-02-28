@@ -6,12 +6,31 @@ import (
 	"github.com/gizak/termui/v3/widgets"
 )
 
+// ImageLinkList is a list of image links
+type ImageLinkList struct {
+	*widgets.List
+}
+
+// SetTitle sets title of paragraph
+func (list *ImageLinkList) SetTitle(title string) {
+	list.Title = title
+}
+
+// SetRows sets numbered bullets of list
+func (list *ImageLinkList) SetRows(rows []string) {
+	list.Rows = rows
+}
+
+// SetTextStyle sets colour of text
+func (list *ImageLinkList) SetTextStyle(style ui.Style) {
+	list.TextStyle = style
+}
+
 // NewImageLinkList returns list of links
-func NewImageLinkList(file []byte) *widgets.List {
-	l := widgets.NewList()
-	l.Title = "List"
-	l.Rows = convert.FileToNumberedList(file)
-	l.TextStyle = ui.NewStyle(ui.ColorBlue)
-	l.WrapText = true
-	return l
+func NewImageLinkList(file []byte) *ImageLinkList {
+	list := &ImageLinkList{widgets.NewList()}
+	list.SetTitle("List")
+	list.SetRows(convert.FileToNumberedList(file))
+	list.SetTextStyle(ui.NewStyle(ui.ColorBlue))
+	return list
 }
