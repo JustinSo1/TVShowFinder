@@ -5,20 +5,44 @@ TVShowFinder will take a list of links to public images and if the scene is from
 
 ![Project Display](http://g.recordit.co/FJFOA1L8av.gif)
 
-## Getting Started
+## Table of Contents
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Support](#support)
 
-
-
-### Prerequisites
-
-Go https://golang.org/
+## Installation
+Install Go https://golang.org/
 
 ## Deployment
 
 Execute `go run TvShowFinder/cmd/main.go [inputFile.txt]` or create a binary for execution with `go build`    
 
+## Contributing
+
+> To get started...
+
+### Step 1
+
+- **Option 1**
+    - Fork this repo!
+
+- **Option 2**
+    - Clone this repo to your local machine using `git@github.com:JustinSo1/EzUpload.git`
+
+### Step 2
+
+- **HACK AWAY!** 
+
+### Step 3
+
+- Create a new pull request
+
 ## Built With
 
 * [Go](https://golang.org/) - The programming language used
+
+## Support
+
+Reach out to me at one of the following places if you need help or just wanna chat about anything!
+- [LinkedIn](https://www.linkedin.com/in/justin-so28/)
