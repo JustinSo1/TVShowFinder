@@ -40,7 +40,7 @@ func elapsed(what string) func() {
 	}
 }
 
-// Display displays JSON response
+// Display will render the terminal UI
 func (term *TerminalWindow) Display(file []byte) {
 	var wg sync.WaitGroup
 	var mutex sync.Mutex

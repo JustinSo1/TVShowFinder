@@ -38,15 +38,15 @@ func ByLink(link string) string {
 	body, err := ioutil.ReadAll(resp.Body)
 	internal.HandleError(err)
 
-	var animeResp JSONResponse
-	json.Unmarshal(body, &animeResp)
+	var tvResp JSONResponse
+	json.Unmarshal(body, &tvResp)
 
 	res := "Link: " + link + "\n" +
-		"Title Romaji: " + animeResp.Docs[0].TitleRomanji + "\n" +
-		"Title English: " + animeResp.Docs[0].TitleEnglish + "\n" +
-		"Similarity: " + strconv.FormatFloat(animeResp.Docs[0].Similarity, 'f', 6, 64) + "\n" +
-		"Episode Number: " + fmt.Sprintf("%v", animeResp.Docs[0].Episode) + "\n" +
-		"Year & Season: " + animeResp.Docs[0].Season + "\n" +
-		"Is Adult: " + strconv.FormatBool(animeResp.Docs[0].IsAdult) + "\n\n"
+		"Title Romaji: " + tvResp.Docs[0].TitleRomanji + "\n" +
+		"Title English: " + tvResp.Docs[0].TitleEnglish + "\n" +
+		"Similarity: " + strconv.FormatFloat(tvResp.Docs[0].Similarity, 'f', 6, 64) + "\n" +
+		"Episode Number: " + fmt.Sprintf("%v", tvResp.Docs[0].Episode) + "\n" +
+		"Year & Season: " + tvResp.Docs[0].Season + "\n" +
+		"Is Adult: " + strconv.FormatBool(tvResp.Docs[0].IsAdult) + "\n\n"
 	return res
 }
