@@ -2,6 +2,7 @@ package userinterface
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/JustinSo1/TVShowFinder/pkg/convert"
@@ -41,17 +42,29 @@ func elapsed(what string) func() {
 
 // Display displays JSON response
 func (term *TerminalWindow) Display(file []byte) {
+	var wg sync.WaitGroup
+	var mutex sync.Mutex
 	fileList := convert.FileToList(file)
 	delta := 100 / len(fileList)
 	for _, link := range fileList {
-		if search.IsURL(link) {
-			term.info.SetText(term.info.Text + search.ByLink(link))
-		}
-		term.graph.SetPercent(term.graph.Percent + int(delta))
-		ui.Render(term.grid)
+		wg.Add(1)
+		go func(wg *sync.WaitGroup, link string) {
+			defer wg.Done()
+			if search.IsURL(link) {
+				mutex.Lock()
+				term.info.SetText(term.info.Text + search.ByLink(link))
+				mutex.Unlock()
+			}
+			mutex.Lock()
+			term.graph.SetPercent(term.graph.Percent + int(delta))
+			ui.Render(term.grid)
+			mutex.Unlock()
+		}(&wg, link)
 	}
+	wg.Wait()
 	term.graph.SetPercent(100)
 	ui.Render(term.grid)
+
 }
 
 // NewTerminalWindow creates a new terminal window
