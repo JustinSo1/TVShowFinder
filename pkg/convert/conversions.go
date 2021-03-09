@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// FileToNumberedList returns a numbered list
+// FileToNumberedList takes in a file and returns a numbered list
 func FileToNumberedList(s []byte) []string {
 	var listElements []string
 	if len(s) == 0 {
@@ -14,7 +14,7 @@ func FileToNumberedList(s []byte) []string {
 	}
 	listElements = append(listElements, "Image Links")
 	listElements = append(listElements, FileToList(s)[:]...)
-	for i := 1; i < len(listElements)-1; i++ {
+	for i := 1; i < len(listElements); i++ {
 		listElements[i] = strconv.Itoa(i) + ". " + listElements[i]
 	}
 	return listElements
