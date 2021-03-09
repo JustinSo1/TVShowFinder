@@ -9,15 +9,41 @@ import (
 
 // TestFileToNumberedList calls conversions.FileToNumberedList with a file, checking
 // for a valid return value.
-func TestFileToNumberedList(t *testing.T) {
+func TestValidFileToNumberedList(t *testing.T) {
 	file := []byte("Hello")
 	expected := []string{
 		"Image Links",
 		"1. Hello",
 	}
-	actual := convert.FileToNumberedList(file)
-	if !reflect.DeepEqual(&expected, &actual) {
-		t.Fatalf(`FileToNumberedList(file) = %q, want match for %#q`, actual, expected)
+	actual, err := convert.FileToNumberedList(file)
+	if !reflect.DeepEqual(&expected, &actual) || err != nil {
+		t.Fatalf(`FileToNumberedList(file) = %q, %v, want match for %#q`, actual, err, expected)
+	}
+}
+
+func TestValidFilesFileToNumberedList(t *testing.T) {
+	file := []byte("Hello\nWorld\nTest")
+	expected := []string{
+		"Image Links",
+		"1. Hello",
+		"2. World",
+		"3. Test",
+	}
+	actual, err := convert.FileToNumberedList(file)
+	if !reflect.DeepEqual(&expected, &actual) || err != nil {
+		t.Fatalf(`FileToNumberedList(file) = %q, %v, want match for %#q`, actual, err, expected)
+	}
+}
+func TestEmptyFileToNumberedList(t *testing.T) {
+	file := []byte{}
+
+	expected := []string{
+		"Image Links",
+	}
+
+	actual, err := convert.FileToNumberedList(file)
+	if !reflect.DeepEqual(&expected, &actual) || err == nil {
+		t.Fatalf(`FileToNumberedList(file) = %q wants match for %#q, %v`, actual, expected, "Cannot give an empty file")
 	}
 }
 

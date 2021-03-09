@@ -1,6 +1,7 @@
 package userinterface
 
 import (
+	"github.com/JustinSo1/TVShowFinder/internal"
 	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
@@ -30,7 +31,9 @@ func (list *ImageLinkList) SetTextStyle(style ui.Style) {
 func NewImageLinkList(file []byte) *ImageLinkList {
 	list := &ImageLinkList{widgets.NewList()}
 	list.SetTitle("List")
-	list.SetRows(convert.FileToNumberedList(file))
+	numberedFile, err := convert.FileToNumberedList(file)
+	internal.HandleError(err)
+	list.SetRows(numberedFile)
 	list.SetTextStyle(ui.NewStyle(ui.ColorBlue))
 	return list
 }
