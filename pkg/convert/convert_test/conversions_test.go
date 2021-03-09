@@ -7,21 +7,9 @@ import (
 	"github.com/JustinSo1/TVShowFinder/pkg/convert"
 )
 
-// TestFileToNumberedList calls conversions.FileToNumberedList with a file, checking
+// TestFileToNumberedList calls conversions.FileToNumberedList with a file with mulitple mock links, checking
 // for a valid return value.
 func TestValidFileToNumberedList(t *testing.T) {
-	file := []byte("Hello")
-	expected := []string{
-		"Image Links",
-		"1. Hello",
-	}
-	actual, err := convert.FileToNumberedList(file)
-	if !reflect.DeepEqual(&expected, &actual) || err != nil {
-		t.Fatalf(`FileToNumberedList(file) = %q, %v, want match for %#q`, actual, err, expected)
-	}
-}
-
-func TestValidFilesFileToNumberedList(t *testing.T) {
 	file := []byte("Hello\nWorld\nTest")
 	expected := []string{
 		"Image Links",
@@ -34,6 +22,9 @@ func TestValidFilesFileToNumberedList(t *testing.T) {
 		t.Fatalf(`FileToNumberedList(file) = %q, %v, want match for %#q`, actual, err, expected)
 	}
 }
+
+// TestFileToNumberedList calls conversions.FileToNumberedList with an empty file, checking
+// for a valid return value.
 func TestEmptyFileToNumberedList(t *testing.T) {
 	file := []byte{}
 
