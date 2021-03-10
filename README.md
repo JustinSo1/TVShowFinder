@@ -17,7 +17,7 @@ Install Go https://golang.org/
 
 ## Deployment
 
-Execute `go run TvShowFinder/cmd/main.go [inputFile.txt]` or create a binary for execution with `go build`    
+Execute `go run TvShowFinder/cmd/main.go [inputFile.txt]` where the txt is a file with image links or create a binary for execution with `go build`    
 
 ## Contributing
 
