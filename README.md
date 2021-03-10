@@ -8,6 +8,7 @@ TVShowFinder will take a list of links to public images and if the scene is from
 ## Table of Contents
 
 - [Installation](#installation)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
 - [Support](#support)
 
